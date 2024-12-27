@@ -6,9 +6,11 @@ class AI():
     __name = ""
     __skill = []
 
-
     def __init__(self, name=None):
         self.engine = pyttsx3.init()
+        voices = self.engine.getProperty('voices')
+        self.engine.setProperty('voice',voices[4].id)
+        name = voices[4].name
         self.r = sr.Recognizer()
         self.m = sr.Microphone()
 
@@ -19,11 +21,9 @@ class AI():
         with self.m as source:
             self.r.adjust_for_ambient_noise(source)
 
-
     @property
     def name(self):
         return self.__name
-
 
     @name.setter
     def name(self, value):
@@ -32,11 +32,9 @@ class AI():
         self.engine.say(sentence)
         self.engine.runAndWait()
 
-
     def say(self, sentence):
         self.engine.say(sentence)
         self.engine.runAndWait()
-
 
     def listen(self):
         print("Say something")

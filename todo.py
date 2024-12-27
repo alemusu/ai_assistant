@@ -2,18 +2,15 @@ from datetime import date
 from enum import Enum
 from uuid import uuid4
 
-
 class Status(Enum):
     NOT_STARTED = 0
     IN_PROGRESS = 1
     COMPLETED = 2
 
-
 class Priority(Enum):
     LOW = 0
     MEDIUM = 1
     HIGH = 2
-
 
 class Item():
     __title = "empty"
@@ -27,13 +24,11 @@ class Item():
     __state = False
     __notes = ""
     __icon = ""
-    
 
     def __init__(self, title:str=None):
         if title is not None:
             self.__title = title
         self.__id = str(uuid4)
-
 
     @property
     def title(self)->str:
@@ -82,8 +77,7 @@ class Item():
     @property
     def age(self)->date:
         """Returns the age of the item"""
-        return self.creation_date() - date.today()
-
+        return self.creation_date - date.today()
 
     @title.setter
     def title(self, value):
@@ -115,23 +109,51 @@ class Item():
     @icon.setter
     def icon(self, value):
         self.__icon = value
-
     
 class Todo():
     __todos = []
-
 
     def __init__(self):
         print("new todo list created")
         self._current = -1
 
+    @property
+    def items(self)->list:
+        return self.__todos
+
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        if self._current < self.__length__() -1:
+            self._current += 1
+            print(self.__todos[self._current].title)
+            return self.__todos[self._current]
+        else:
+            self._current = -1
+        raise StopIteration
+
+    def __length__(self):
+        return len(self.__todos)
 
     def new_item(self, item:Item):
         self.__todos.append(item)
 
-
-    @property
-    def items(self)->list:
+    def show(self):
         print("*"*80)
         for item in self.__todos:
-            print(item.title(), item.status(), item.priority(), item.age())
+            print(item.title, item.status, item.priority, item.age)
+        print("*"*80)
+
+    def remove_item(self, uuid:str=None, title:str=None):
+        if title is None and uuid is None:
+            print("You need to provide some details for me to remove the item")
+        elif uuid is None and title:
+            for item in self.__todos:
+                if item.title() == title:
+                    self.__todos.remove(item)
+                    return True
+            pritn("Item with the title", title, "not found")
+        else: #case uuid!=None
+            self.__todos.remove(uuid)
+            return True

@@ -61,7 +61,7 @@ while True and command != "goodbye":
     # (i know it's very unoptimized and stupid doing if-if-if 
     # without applying any mathematical solution, 
     # my man i'm just getting started step by step dayum)
-    if command == "tell me a joke":
+    if command in ["tell me a joke","tell a joke"]:
         joke()
         command=""
     if command in ["add to-do","add to do","add a task for today"]:

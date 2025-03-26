@@ -2,22 +2,22 @@ import pyjokes
 from ai import AI
 from todo import Todo, Item
 
-quesadilla = AI()
+pancho = AI()
 todo = Todo()
 
 def joke():
     funny = pyjokes.get_joke()
     print(funny)
-    quesadilla.say(funny)
+    pancho.say(funny)
 
 def add_todo()->bool:
     item=Item()
-    quesadilla.say("Tell me what to add to the list")
+    pancho.say("Tell me what to add to the list")
     try:
-        item.title=quesadilla.listen()
+        item.title=pancho.listen()
         todo.new_item(item)
         message="Added " + item.title
-        quesadilla.say(message)
+        pancho.say(message)
         return True
     except:
         print("oops there was an error adding the task to the todo list")
@@ -25,19 +25,19 @@ def add_todo()->bool:
     
 def list_todos():
     if todo.__length__() > 0:
-        quesadilla.say("Your to do's are")
+        pancho.say("Your to do's are")
         for item in todo:
-            quesadilla.say(item.title)
+            pancho.say(item.title)
     else:
         print("The todo list is empty")
 
 def remove_todo()->bool:
-    quesadilla.say("Which task do you want me to remove?")
+    pancho.say("Which task do you want me to remove?")
     try:
-        item_title = quesadilla.listen()
+        item_title = pancho.listen()
         todo.remove_item(title=item_title)
         message="Removed " + item_title
-        quesadilla.say(message)
+        pancho.say(message)
         return True
     except:
         print("oops there was an error removing the task from the todo list")
@@ -50,7 +50,7 @@ command = ""
 while True and command != "goodbye":
     try:
         #wait for a command and process it 
-        command = quesadilla.listen()
+        command = pancho.listen()
         command = command.lower()
     except:
         print("oops there was an error")
@@ -74,4 +74,4 @@ while True and command != "goodbye":
         remove_todo()
         command=""
 
-quesadilla.say("Goodbye!")
+pancho.say("Goodbye!")
